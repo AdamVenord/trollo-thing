@@ -4,9 +4,17 @@ class Customer < ApplicationRecord
   def self.all_customers(user_id)
     Customer.find_by_sql(
       "SELECT *
-      FROM  customers AS c
+      FROM customers AS c
       WHERE c.user_id = #{user_id}"
     )
+  end
+
+  def self.single_customers(user_id, customer_id)
+    Customer.find_by_sql(["
+      SELECT *
+      FROM  customers AS c
+      WHERE c.id = ? AND c.user_id = ?
+      ", customer_id, user_id]).first
   end
   
   def full_name

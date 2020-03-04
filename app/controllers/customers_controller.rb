@@ -12,6 +12,11 @@ class CustomersController < ApplicationController
     @customer = current_user.customers.new
   end
 
+  def create
+    Customer.create_customer(customer_params, current_user.id)
+    redirect_to customers_path
+  end
+
   def edit
   end
 
@@ -28,7 +33,7 @@ class CustomersController < ApplicationController
   private
     def set_customer
       #SELECT single record
-      @customer = Customer.single_customer(current_user.id, params[:id])
+      @customer = Customer.single_customers(current_user.id, params[:id])
     end
 
     def customer_params
